@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class EquationController {
     private final EquationAction equationAction;
@@ -17,7 +19,8 @@ public class EquationController {
     }
 
     @GetMapping(value = "/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("model", "ksdbfkisdf");
         return "index";
     }
 
@@ -25,9 +28,10 @@ public class EquationController {
     public String calculate(@RequestParam double factorA,
                             @RequestParam double factorB,
                             @RequestParam double factorC,
-                            Model model) {
+                            HttpServletRequest request) {
 
-        model.addAttribute("solution", equationAction.calculate(factorA, factorB, factorC));
+        request.setAttribute("solution", equationAction.calculate(factorA, factorB, factorC));
+        /*model.addAttribute();*/
         return "index";
     }
 }
